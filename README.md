@@ -1,0 +1,1 @@
+An example of [a space-filling curve layout](http://bl.ocks.org/nitaku/8772179) using [the Hilbert curve](http://bl.ocks.org/nitaku/6514960) to represent the *flare* software package classes.
