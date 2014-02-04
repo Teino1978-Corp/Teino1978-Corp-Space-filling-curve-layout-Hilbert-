@@ -76,12 +76,15 @@ window.sfc_layout = {
             d.x = point.x
             d.y = point.y
             
-        ### center the layout coordinates in its centroid ###
-        cx = d3.mean(seq, (d)->d.x)
-        cy = d3.mean(seq, (d)->d.y)
+        ### center the layout coordinates in the center of its bounding box ###
+        max_x = d3.max(seq, (d)->d.x)
+        max_y = d3.max(seq, (d)->d.y)
+        min_x = d3.min(seq, (d)->d.x)
+        min_y = d3.min(seq, (d)->d.y)
+        
         for d in seq
-            d.x -= cx
-            d.y -= cy
+            d.x -= (max_x+min_x)/2
+            d.y -= (max_y+min_y)/2
             
     ### recursively assign positions to internal nodes too ###
     displace_tree: (node) ->

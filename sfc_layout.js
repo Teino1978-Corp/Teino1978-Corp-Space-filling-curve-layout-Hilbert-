@@ -81,7 +81,7 @@
       }
     },
     displace: function(seq, curve_cfg, scale, orientation) {
-      var curve, curve_string, cx, cy, d, point, steps, _i, _j, _len, _len2, _ref, _ref2, _results;
+      var curve, curve_string, d, max_x, max_y, min_x, min_y, point, steps, _i, _j, _len, _len2, _ref, _ref2, _results;
       scale = scale != null ? scale : 10;
       orientation = orientation != null ? orientation : 0;
       /* create the minimal curve that can accommodate the whole sequence
@@ -105,19 +105,25 @@
         d.x = point.x;
         d.y = point.y;
       }
-      /* center the layout coordinates in its centroid
+      /* center the layout coordinates in the center of its bounding box
       */
-      cx = d3.mean(seq, function(d) {
+      max_x = d3.max(seq, function(d) {
         return d.x;
       });
-      cy = d3.mean(seq, function(d) {
+      max_y = d3.max(seq, function(d) {
+        return d.y;
+      });
+      min_x = d3.min(seq, function(d) {
+        return d.x;
+      });
+      min_y = d3.min(seq, function(d) {
         return d.y;
       });
       _results = [];
       for (_j = 0, _len2 = seq.length; _j < _len2; _j++) {
         d = seq[_j];
-        d.x -= cx;
-        _results.push(d.y -= cy);
+        d.x -= (max_x + min_x) / 2;
+        _results.push(d.y -= (max_y + min_y) / 2);
       }
       return _results;
     },
